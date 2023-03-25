@@ -1,10 +1,14 @@
 import connect as con
 
 
+def test_alpha(value):
+    value = value.replace(' ', '')
+    if value.isalpha() is not True:
+        raise ValueError
+
+
 def input_reg_user():
-    def test_alpha(value):
-        if value.isalpha() is not True:
-            raise ValueError
+    print(" | Sign Up | ")
     while True:
         try:
             name = input("Name: ")
@@ -25,6 +29,24 @@ def input_reg_user():
             continue
 
 
+def input_reg_movie():
+    print(" | REGISTER MOVIE | ")
+    while True:
+        try:
+            name = input("Movie Name: ")
+            test_alpha(name)
+            age = int(input("Age Group: "))
+            category = input("Category: ")
+            test_alpha(category)
+            plan = input("Plan: (Basic | Medium | Premium): ").lower().strip()
+            if plan != 'basic' and plan != 'medium' and plan != 'premium':
+                raise ValueError
+            return name, age, category, plan
+        except ValueError:
+            print('Invalid value')
+            continue
+
+
 def register_user():
     """
     Adds a new user in the database
@@ -37,10 +59,11 @@ def register_user():
     con.db.commit()
 
 
-def register_movie(name, age, category, plan):
+def register_movie():
     """
     Adds a new user in the database
     """
+    name, age, category, plan = input_reg_movie()
     sql = f"INSERT INTO movie (nameMovie, ageGroup, category, planMovie) " \
           f"VALUES ('{name}','{age}','{category}','{plan}')"
     con.cursor.execute(sql)
@@ -50,7 +73,9 @@ def register_movie(name, age, category, plan):
 # register_user('Raphael', 'rap@', 18, 'adm', 'basic')
 # register_movie('Die Hard', 16, 'action', 'basic')
 
-register_user()
-con.cursor.execute('SELECT * from user')
+""" register_user() """
+register_movie()
+""" con.cursor.execute('SELECT * from user') """
+con.cursor.execute('SELECT * from movie')
 for i in con.cursor:
     print(i)
