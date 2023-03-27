@@ -1,13 +1,14 @@
-import menu
+from menu import menu
 from create import register_user, register_movie
 """
-import read
 import update
 import delete
-import netflix """
+import netflix
+import read"""
 
-choice = menu()
+
 while True:
+    choice = menu()
     if choice == 'Sign in':
         ...
     elif choice == 'Sign Up':

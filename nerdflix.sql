@@ -22,3 +22,8 @@ CREATE TABLE movie (
 INSERT INTO user (nameUser, emailUser, ageUser, typeUser, planUser) VALUES ('{name}','{email}','{age}','{usertype}','{plan}')
 
 INSERT INTO user (nameMovie, ageGroup, category, planMovie) VALUES ('{name}','{age}','{category}','{plan}')
+
+
+UPDATE user
+SET nameUser = '{name}'
+WHERE id = '{id}'
