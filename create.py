@@ -7,6 +7,16 @@ def test_alpha(value):
         raise ValueError
 
 
+def test_user_type(value):
+    if value != 'adm' and value != 'regular':
+        raise ValueError
+
+
+def test_plan(value):
+    if value != 'basic' and value != 'medium' and value != 'premium':
+        raise ValueError
+
+
 def input_reg_user():
     print(" | Sign Up | ")
     while True:
@@ -17,12 +27,10 @@ def input_reg_user():
             age = int(input("Age: "))
             usertype = input("User type (Adm | Regular): ").lower().strip()
             test_alpha(usertype)
-            if usertype != 'adm' and usertype != 'regular':
-                raise ValueError
+            test_user_type(usertype)
             plan = input("Plan (Basic | Medium | Premium): ").lower().strip()
             test_alpha(plan)
-            if plan != 'basic' and plan != 'medium' and plan != 'premium':
-                raise ValueError
+            test_plan(plan)
             return name, email, age, usertype, plan
         except ValueError:
             print('Invalid value')

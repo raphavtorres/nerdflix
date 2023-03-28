@@ -10,7 +10,7 @@ def menu():
         inquirer.List('opt',
                       message='---MENU---',
                       choices=['Sign in', 'Sign Up', 'Register Movie',
-                               'List Movies', 'Exit']
+                               'List Movies', 'List Users', 'Update', 'Delete', 'Exit']
                       )
     ]
     choice = inquirer.prompt(opt_menu)

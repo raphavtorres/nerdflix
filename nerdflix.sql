@@ -29,6 +29,9 @@ SET nameUser = '{name}'
 WHERE id = '{id}'
 
 
+SELECT nameUser, typeUser FROM user WHERE emailUser = 'rap@';
+
+DELETE FROM name WHERE id = 1;
 
 
 
