@@ -4,7 +4,13 @@ from read import read_movie, read_user
 
 
 def delete_user():
-    ...
+    while True:
+        try:
+            userID = int(input('User ID to be deleted: '))
+            break
+        except TypeError:
+            continue
+        
 
 
 def delete_movie():

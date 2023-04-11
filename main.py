@@ -3,8 +3,12 @@ from create import register_user, register_movie
 from read import read_movie, read_user
 from login import login, adm_warning
 from update import choose_update
+from delete import delete_choice
+from window import Aplication
+
+
+
 """
-import update
 import delete
 import netflix
 """
@@ -24,7 +28,7 @@ while True:
         adm_warning(user_type, read_user)
     elif choice == 'Update':
         adm_warning(user_type, choose_update)
-    # elif choice == 'Delete':
-    #     adm_warning(user_type, update)
+    elif choice == 'Delete':
+        adm_warning(user_type, delete_choice)
     else:
         break
