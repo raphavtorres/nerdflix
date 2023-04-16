@@ -13,7 +13,7 @@ def login():
     response = ''
     for i in con.cursor:
         response = i
-        
+     
     if response != '':
         print(f"Hello, {i[0]}! | type: ({i[1]})")
     else:    

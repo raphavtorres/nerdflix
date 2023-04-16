@@ -22,3 +22,15 @@ def read_movie():
     table_bd = 'movie'
     list_columns = ["ID", "NAME", "AGE GROUP", "CATEGORY", "PLAN"]
     table(table_bd, list_columns)
+
+
+def read_user_window():
+    con.cursor.execute('SELECT * from user')
+    result = con.cursor.fetchall()
+    return result
+
+
+def read_movie_window():
+    con.cursor.execute('SELECT * from movie')
+    result = con.cursor.fetchall()
+    return result

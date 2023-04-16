@@ -1,10 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
 
-import connect
+""" import connect """
 from create import register_user_window
+from update import update
+from read import read_user_window
 
 window = tk.Tk()
+
 
 class Application():
     def __init__(self):
@@ -16,7 +19,7 @@ class Application():
         self.inputs()
         self.list_frame_2()
         window.mainloop()
-    
+
     def screen(self):
         self.window.title("Nerdflix")
         self.window.geometry('700x500')
@@ -39,16 +42,16 @@ class Application():
         self.btn_search = tk.Button(self.frame_0, text='Search', bg='#70bfb3')
         self.btn_search.place(relx=0.25, rely=0.25, relwidth=0.1, relheight=0.5)
 
-        self.btn_clear = tk.Button(self.frame_0, text='Clear', bg='#70bfb3')
+        self.btn_clear = tk.Button(self.frame_0, text='Clear', bg='#70bfb3', command=self.clear)
         self.btn_clear.place(relx=0.40, rely=0.25, relwidth=0.1, relheight=0.5)
 
         self.btn_create = tk.Button(self.frame_0, text='Create', bg='#70bfb3', command=self.insert_user)
         self.btn_create.place(relx=0.55, rely=0.25, relwidth=0.1, relheight=0.5)
 
-        self.btn_read = tk.Button(self.frame_0, text='Read', bg='#70bfb3')
+        self.btn_read = tk.Button(self.frame_0, text='Read', bg='#70bfb3', command=self.read_user)
         self.btn_read.place(relx=0.65, rely=0.25, relwidth=0.1, relheight=0.5)
 
-        self.btn_update = tk.Button(self.frame_0, text='Update', bg='#70bfb3')
+        self.btn_update = tk.Button(self.frame_0, text='Update', bg='#70bfb3', command=self.update_user)
         self.btn_update.place(relx=0.75, rely=0.25, relwidth=0.1, relheight=0.5)
 
         self.btn_delete = tk.Button(self.frame_0, text='Delete', bg='#70bfb3')
@@ -73,6 +76,15 @@ class Application():
         self.lb_age = tk.Label(self.frame_1, text='Age:', background='#db3b4e')
         self.lb_age.place(relx=0.7, rely=0.36, relwidth=0.1, relheight=0.15)
 
+        self.lb_delete_user = tk.Label(self.frame_1, text="Delete:", background='#db3b4e')
+        self.lb_delete_user.place(relx=0.005, rely=0.65, relwidth=0.1, relheight=0.15)
+
+        self.lb_update_element = tk.Label(self.frame_1, text="Update:", background='#db3b4e')
+        self.lb_update_element.place(relx=0.31, rely=0.65, relwidth=0.1, relheight=0.15)
+
+        self.lb_update_value = tk.Label(self.frame_1, text="New Value:", background='#db3b4e')
+        self.lb_update_value.place(relx=0.62, rely=0.65, relwidth=0.1, relheight=0.15)
+
     def inputs(self):
         self.input_id = tk.Entry(self.frame_0)
         self.input_id.place(relx=0.005, rely=0.45, relwidth=0.1, relheight=0.5)
@@ -92,11 +104,23 @@ class Application():
         self.input_age = tk.Entry(self.frame_1)
         self.input_age.place(relx=0.82, rely=0.36, relwidth=0.1, relheight=0.15)
 
+        self.input_remove_id_user = tk.Entry(self.frame_1)
+        self.input_remove_id_user.place(relx=0.12, rely=0.65, relwidth=0.1, relheight=0.15)
+
+        self.input_update_element = tk.Entry(self.frame_1)
+        self.input_update_element.place(relx=0.41, rely=0.65, relwidth=0.19, relheight=0.15)
+
+        self.input_update_value = tk.Entry(self.frame_1)
+        self.input_update_value.place(relx=0.73, rely=0.65, relwidth=0.19, relheight=0.15)
+
     def list_frame_2(self):
         self.list_client = ttk.Treeview(
-            self.frame_2, 
+            self.frame_2,
             height=3,
-            columns=('col0', 'col1', 'col2', 'col3', 'col4', 'col5','col6'))
+            columns=(
+                'col0', 'col1', 'col2', 'col3', 'col4', 'col5', 'col6'
+                )
+            )
         self.list_client.heading('#0', text='ID')
         self.list_client.heading('#1', text='NAME')
         self.list_client.heading('#2', text='EMAIL')
@@ -115,10 +139,26 @@ class Application():
 
     def insert_user(self):
         register_user_window(
-            self.input_name.get(), 
+            self.input_name.get(),
             self.input_email.get(),
             self.input_age.get(),
-            self.input_type.get(), 
-            self.input_plan.get())
+            self.input_type.get(),
+            self.input_plan.get()
+        )
 
-window = Application()
+    def update_user(self):
+        update(
+            'user',
+            self.input_update_element.get(),
+            self.input_update_value.get(),
+            self.input_id.get(),
+        )
+
+    def clear(self):
+        self.list_client.delete(*self.list_client.get_children())
+
+    def read_user(self):
+        self.clear()
+        users = read_user_window()
+        for user in users:
+            self.list_client.insert("", "end", values=user)

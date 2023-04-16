@@ -56,9 +56,6 @@ def input_reg_movie():
 
 
 def register_user():
-    """
-    Adds a new user in the database
-    """
     name, email, age, usertype, plan = input_reg_user()
     sql = f"INSERT INTO user ( \
     nameUser, emailUser, ageUser, typeUser, planUser) \

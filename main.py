@@ -4,14 +4,6 @@ from read import read_movie, read_user
 from login import login, adm_warning
 from update import choose_update
 from delete import delete_choice
-from window import Aplication
-
-
-
-"""
-import delete
-import netflix
-"""
 
 user_type = ''
 while True:

@@ -10,7 +10,6 @@ def delete_user():
             break
         except TypeError:
             continue
-        
 
 
 def delete_movie():
@@ -31,7 +30,7 @@ def delete_choice():
         delete_movie()
 
 
-def delete():
-    sql = "DELETE FROM name WHERE id = 1"
+def delete(id):
+    sql = f"DELETE FROM name WHERE id = {id}"
     con.cursor.execute(sql)
     con.db.commit()
