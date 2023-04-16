@@ -4,7 +4,8 @@ from tkinter import ttk
 """ import connect """
 from create import register_user_window
 from update import update
-from read import read_user_window
+from read import read_user_window, search_user_window
+from delete import delete_user_window
 
 window = tk.Tk()
 
@@ -39,7 +40,7 @@ class Application():
         self.frame_2.place(relx=0.03, rely=0.60, relwidth=0.94, relheight=0.35)
 
     def buttons(self):
-        self.btn_search = tk.Button(self.frame_0, text='Search', bg='#70bfb3')
+        self.btn_search = tk.Button(self.frame_0, text='Search', bg='#70bfb3', command=self.search_user)
         self.btn_search.place(relx=0.25, rely=0.25, relwidth=0.1, relheight=0.5)
 
         self.btn_clear = tk.Button(self.frame_0, text='Clear', bg='#70bfb3', command=self.clear)
@@ -54,7 +55,7 @@ class Application():
         self.btn_update = tk.Button(self.frame_0, text='Update', bg='#70bfb3', command=self.update_user)
         self.btn_update.place(relx=0.75, rely=0.25, relwidth=0.1, relheight=0.5)
 
-        self.btn_delete = tk.Button(self.frame_0, text='Delete', bg='#70bfb3')
+        self.btn_delete = tk.Button(self.frame_0, text='Delete', bg='#70bfb3', command=self.delete_user)
         self.btn_delete.place(relx=0.85, rely=0.25, relwidth=0.1, relheight=0.5)
 
     def labels(self):
@@ -118,22 +119,24 @@ class Application():
             self.frame_2,
             height=3,
             columns=(
-                'col0', 'col1', 'col2', 'col3', 'col4', 'col5', 'col6'
+                'col0', 'col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7'
                 )
             )
-        self.list_client.heading('#0', text='ID')
-        self.list_client.heading('#1', text='NAME')
-        self.list_client.heading('#2', text='EMAIL')
-        self.list_client.heading('#3', text='PLAN')
-        self.list_client.heading('#4', text='TYPE')
-        self.list_client.heading('#5', text='AGE')
+        self.list_client.heading('#0', text='')
+        self.list_client.heading('#1', text='ID')
+        self.list_client.heading('#2', text='NAME')
+        self.list_client.heading('#3', text='EMAIL')
+        self.list_client.heading('#4', text='AGE')
+        self.list_client.heading('#5', text='TYPE')
+        self.list_client.heading('#6', text='PLAN')
 
-        self.list_client.column('#0', width=30)
-        self.list_client.column('#1', width=220)
-        self.list_client.column('#2', width=220)
-        self.list_client.column('#3', width=60)
+        self.list_client.column('#0', width=0)
+        self.list_client.column('#1', width=30)
+        self.list_client.column('#2', width=200)
+        self.list_client.column('#3', width=200)
         self.list_client.column('#4', width=50)
-        self.list_client.column('#5', width=50)
+        self.list_client.column('#5', width=60)
+        self.list_client.column('#6', width=70)
 
         self.list_client.place(relx=0.01, rely=0.02, relwidth=0.98, relheight=0.96)
 
@@ -162,3 +165,16 @@ class Application():
         users = read_user_window()
         for user in users:
             self.list_client.insert("", "end", values=user)
+
+    def search_user(self):
+        self.clear()
+        users = search_user_window(
+            self.input_id.get(),
+        )
+        for user in users:
+            self.list_client.insert("", "end", values=user)
+
+    def delete_user(self):
+        delete_user_window(
+            self.input_id.get(),
+        )
