@@ -1,6 +1,6 @@
 import connect as con
 import inquirer
-from read import read_movie, read_user
+""" from read import read_movie, read_user """
 
 
 def delete_user():
@@ -10,6 +10,7 @@ def delete_user():
             break
         except TypeError:
             continue
+    return userID
 
 
 def delete_movie():
@@ -30,7 +31,7 @@ def delete_choice():
         delete_movie()
 
 
-def delete(id):
-    sql = f"DELETE FROM name WHERE id = {id}"
+def delete_user_window(id):
+    sql = f"DELETE FROM user WHERE id = {id}"
     con.cursor.execute(sql)
     con.db.commit()
