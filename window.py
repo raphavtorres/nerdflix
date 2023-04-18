@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 
-""" import connect """
 from create import register_user_window
 from update import update
 from read import read_user_window, search_user_window
@@ -77,14 +76,11 @@ class Application():
         self.lb_age = tk.Label(self.frame_1, text='Age:', background='#db3b4e')
         self.lb_age.place(relx=0.7, rely=0.36, relwidth=0.1, relheight=0.15)
 
-        self.lb_delete_user = tk.Label(self.frame_1, text="Delete:", background='#db3b4e')
-        self.lb_delete_user.place(relx=0.005, rely=0.65, relwidth=0.1, relheight=0.15)
-
         self.lb_update_element = tk.Label(self.frame_1, text="Update:", background='#db3b4e')
-        self.lb_update_element.place(relx=0.31, rely=0.65, relwidth=0.1, relheight=0.15)
+        self.lb_update_element.place(relx=0.005, rely=0.65, relwidth=0.1, relheight=0.15)
 
         self.lb_update_value = tk.Label(self.frame_1, text="New Value:", background='#db3b4e')
-        self.lb_update_value.place(relx=0.62, rely=0.65, relwidth=0.1, relheight=0.15)
+        self.lb_update_value.place(relx=0.31, rely=0.65, relwidth=0.1, relheight=0.15)
 
     def inputs(self):
         self.input_id = tk.Entry(self.frame_0)
@@ -105,14 +101,11 @@ class Application():
         self.input_age = tk.Entry(self.frame_1)
         self.input_age.place(relx=0.82, rely=0.36, relwidth=0.1, relheight=0.15)
 
-        self.input_remove_id_user = tk.Entry(self.frame_1)
-        self.input_remove_id_user.place(relx=0.12, rely=0.65, relwidth=0.1, relheight=0.15)
-
         self.input_update_element = tk.Entry(self.frame_1)
-        self.input_update_element.place(relx=0.41, rely=0.65, relwidth=0.19, relheight=0.15)
+        self.input_update_element.place(relx=0.12, rely=0.65, relwidth=0.19, relheight=0.15)
 
         self.input_update_value = tk.Entry(self.frame_1)
-        self.input_update_value.place(relx=0.73, rely=0.65, relwidth=0.19, relheight=0.15)
+        self.input_update_value.place(relx=0.41, rely=0.65, relwidth=0.19, relheight=0.15)
 
     def list_frame_2(self):
         self.list_client = ttk.Treeview(
@@ -132,13 +125,17 @@ class Application():
 
         self.list_client.column('#0', width=0)
         self.list_client.column('#1', width=30)
-        self.list_client.column('#2', width=200)
-        self.list_client.column('#3', width=200)
+        self.list_client.column('#2', width=190)
+        self.list_client.column('#3', width=190)
         self.list_client.column('#4', width=50)
-        self.list_client.column('#5', width=60)
+        self.list_client.column('#5', width=50)
         self.list_client.column('#6', width=70)
 
         self.list_client.place(relx=0.01, rely=0.02, relwidth=0.98, relheight=0.96)
+
+        self.scrool_list = tk.Scrollbar(self.frame_2, orient='vertical')
+        self.list_client.configure(yscrollcommand=self.scrool_list.set)
+        self.scrool_list.place(relx=0.97, rely=0.03, relwidth=0.03, relheight=0.949)
 
     def insert_user(self):
         register_user_window(
@@ -148,6 +145,7 @@ class Application():
             self.input_type.get(),
             self.input_plan.get()
         )
+        self.read_user()
 
     def update_user(self):
         update(
@@ -156,9 +154,19 @@ class Application():
             self.input_update_value.get(),
             self.input_id.get(),
         )
+        self.read_user()
 
     def clear(self):
         self.list_client.delete(*self.list_client.get_children())
+        self.input_age.delete(0, tk.END)
+        self.input_email.delete(0, tk.END)
+        self.input_id.delete(0, tk.END)
+        self.input_name.delete(0, tk.END)
+        self.input_plan.delete(0, tk.END)
+        self.input_type.delete(0, tk.END)
+        self.input_update_element.delete(0, tk.END)
+        self.input_update_value.delete(0, tk.END)
+
 
     def read_user(self):
         self.clear()
@@ -167,10 +175,8 @@ class Application():
             self.list_client.insert("", "end", values=user)
 
     def search_user(self):
+        users = search_user_window(self.input_id.get())
         self.clear()
-        users = search_user_window(
-            self.input_id.get(),
-        )
         for user in users:
             self.list_client.insert("", "end", values=user)
 
@@ -178,3 +184,4 @@ class Application():
         delete_user_window(
             self.input_id.get(),
         )
+        self.read_user()
