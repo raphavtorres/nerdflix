@@ -1,3 +1,4 @@
 from window import Application
 
-window = Application()
+if __name__ == "__main__":
+    window = Application()

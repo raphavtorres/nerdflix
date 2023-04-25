@@ -5,6 +5,8 @@ from create import register_user_window
 from update import update
 from read import read_user_window, search_user_window
 from delete import delete_user_window
+import pyautogui
+pyautogui.PAUSE = 1
 
 window = tk.Tk()
 
@@ -18,25 +20,29 @@ class Application():
         self.labels()
         self.inputs()
         self.list_frame_2()
+        self.input_id.focus_set()
         window.mainloop()
 
     def screen(self):
         self.window.title("Nerdflix")
-        self.window.geometry('700x500')
+        self.window.geometry('700x700')
         self.window.configure(background='#4edb3b')
-        self.window.resizable(True, True)
-        self.window.minsize(width=300, height=200)
-        self.window.maxsize(width=700, height=500)
+        self.window.resizable(False, False)
+        # self.window.minsize(width=300, height=200)
+        # self.window.maxsize(width=700, height=900)
 
     def frame(self):
         self.frame_0 = tk.Frame(self.window, bg='#db3b4e')
-        self.frame_0.place(relx=0.03, rely=0.03, relwidth=0.94, relheight=0.11)
+        self.frame_0.place(relx=0.03, rely=0.03, relwidth=0.94, relheight=0.09)
 
         self.frame_1 = tk.Frame(self.window, bg='#db3b4e')
-        self.frame_1.place(relx=0.03, rely=0.20, relwidth=0.94, relheight=0.35)
+        self.frame_1.place(relx=0.03, rely=0.16, relwidth=0.94, relheight=0.25)
 
         self.frame_2 = tk.Frame(self.window, bg='#db3b4e')
-        self.frame_2.place(relx=0.03, rely=0.60, relwidth=0.94, relheight=0.35)
+        self.frame_2.place(relx=0.03, rely=0.42, relwidth=0.94, relheight=0.15)
+
+        self.frame_3 = tk.Frame(self.window, bg='#db3b4e')
+        self.frame_3.place(relx=0.03, rely=0.60, relwidth=0.94, relheight=0.20)
 
     def buttons(self):
         self.btn_search = tk.Button(self.frame_0, text='Search', bg='#70bfb3', command=self.search_user)
@@ -56,6 +62,25 @@ class Application():
 
         self.btn_delete = tk.Button(self.frame_0, text='Delete', bg='#70bfb3', command=self.delete_user)
         self.btn_delete.place(relx=0.85, rely=0.25, relwidth=0.1, relheight=0.5)
+
+        #  posic mover bot alerta captura
+        self.btn_dimension = tk.Button(self.frame_3, text='Monitor', bg='#70bfb3', command=self.monitor)
+        self.btn_dimension.place(relx=0.02, rely=0.25, relwidth=0.1, relheight=0.5)
+
+        self.btn_mouse_position = tk.Button(self.frame_3, text='Position', bg='#70bfb3', command=self.mouse_position)
+        self.btn_mouse_position.place(relx=0.15, rely=0.25, relwidth=0.1, relheight=0.5)
+
+        self.btn_move_mouse = tk.Button(self.frame_3, text='Move', bg='#70bfb3', command=self.move_mouse)
+        self.btn_move_mouse.place(relx=0.3, rely=0.25, relwidth=0.1, relheight=0.5)
+
+        self.btn_bot = tk.Button(self.frame_3, text='Bot', bg='#70bfb3', command=self.bot)
+        self.btn_bot.place(relx=0.42, rely=0.25, relwidth=0.1, relheight=0.5)
+
+        self.btn_alert = tk.Button(self.frame_3, text='Alert', bg='#70bfb3', command=self.alert)
+        self.btn_alert.place(relx=0.55, rely=0.25, relwidth=0.1, relheight=0.5)
+
+        self.btn_capture = tk.Button(self.frame_3, text='Capture', bg='#70bfb3', command=self.capture)
+        self.btn_capture.place(relx=0.65, rely=0.25, relwidth=0.1, relheight=0.5)
 
     def labels(self):
         self.lb_id_user = tk.Label(self.frame_0, text='ID', background='#db3b4e')
@@ -167,7 +192,6 @@ class Application():
         self.input_update_element.delete(0, tk.END)
         self.input_update_value.delete(0, tk.END)
 
-
     def read_user(self):
         self.clear()
         users = read_user_window()
@@ -185,3 +209,39 @@ class Application():
             self.input_id.get(),
         )
         self.read_user()
+
+    def monitor(self):  # to discover the windows size
+        wind_x, wind_y = pyautogui.size()
+        print(wind_x)
+        print(wind_y)
+
+    def mouse_position(self):  # to discover mouse position
+        mouse_x, mouse_y = pyautogui.position()
+        print(mouse_x)
+        print(mouse_y)
+
+    def move_mouse(self):
+        pyautogui.moveTo(100, 150)
+
+    def bot(self):
+        pyautogui.press("win")
+        pyautogui.write("txt")
+        pyautogui.press("enter")
+        pyautogui.write("Raphael")
+        pyautogui.hotkey('ctrl', 's')
+        pyautogui.write("salvandomermao")
+        for i in range(10):
+            pyautogui.press('tab')
+        for i in range(2):
+            pyautogui.press('up')
+        pyautogui.press('enter')
+        pyautogui.hotkey('alt', 'l')
+        pyautogui.hotkey('win', 'd')
+        pyautogui.hotkey('win', 'l')
+
+    def alert(self):
+        pyautogui.alert(text="Test", title="Text Box", button="OK")
+        print(pyautogui.confirm(text="Test", title="Text Box", buttons=["OK", "Cancel"]))
+
+    def capture(self):
+        ...
